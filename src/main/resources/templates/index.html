@@ -37,6 +37,18 @@
                     var tabell = document.getElementById("tabell1");
                     var tabell2AkkuratSamme = document.getElementsByTagName("table")[0];
                     tabell.appendChild(tr);
+
+                    var sletteKnapp = document.createElement("button");
+                    var sletteTekst = document.createTextNode("Slett");
+                    sletteKnapp.setAttribute("id", personArray[index].id);
+                    sletteKnapp.appendChild(sletteTekst);
+                    td.appendChild(sletteKnapp);
+
+                    sletteKnapp.onclick = function() {
+                        var id = this.getAttribute("id");
+                        slett(id);
+                    }
+
                 }
             }
         }
@@ -55,6 +67,19 @@
             xmlHttp.open("POST", "/persons/json", true);
             xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlHttp.send("firstName="+ data);
+        }
+
+        function slett(id) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function(){
+                if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                    var text = xmlHttp.responseText;
+
+                }
+            }
+            xmlHttp.open("POST", "/delete", true);
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp.send("id="+ id);
         }
 
         /*]]>*/
