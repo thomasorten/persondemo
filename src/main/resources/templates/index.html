@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Forside</h1>
+
+    <div>
+        <input type="text" id="fornavn" name="fornavn">
+        <button id="send" onclick="send()">Lagre</button>
+    </div>
+
+    <table id="tabell1">
+        <tr>
+            <th>Fornavn</th>
+            <th>Etternavn</th>
+            <th>Alder</th>
+        </tr>
+
+    </table>
+    <script>
+        /*<![CDATA[*/
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function(){
+            if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                var text = xmlHttp.responseText;
+                var personArray = JSON.parse(text);
+                var index;
+                for (index in personArray) {
+                    var text = document.createTextNode(personArray[index].firstName);
+                    var td = document.createElement("td");
+                    td.appendChild(text);
+                    var tr = document.createElement("tr");
+                    tr.appendChild(td);
+                    var tabell = document.getElementById("tabell1");
+                    var tabell2AkkuratSamme = document.getElementsByTagName("table")[0];
+                    tabell.appendChild(tr);
+                }
+            }
+        }
+        xmlHttp.open("GET", "/persons/json", true);
+        xmlHttp.send();
+
+        function send() {
+            var data = document.getElementById("fornavn").value;
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function(){
+                if(xmlHttp.readyState == 4 && xmlHttp.status == 200){
+                    var text = xmlHttp.responseText;
+
+                }
+            }
+            xmlHttp.open("POST", "/persons/json", true);
+            xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlHttp.send("firstName="+ data);
+        }
+
+        /*]]>*/
+    </script>
+</body>
+</html>
