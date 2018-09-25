@@ -33,7 +33,9 @@ public class IndexController {
     @RequestMapping(path = "/persons/json", method = RequestMethod.POST)
     public @ResponseBody Person savePerson(
             @RequestParam(value= "firstName", required = false) String firstName){
-        this.firstName = firstName;
+        Person person = new Person(firstName);
+        personRepository.save(person);
+       // this.firstName = firstName;
         return null;
     }
 
